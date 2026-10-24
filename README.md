@@ -21,8 +21,6 @@ $ composer require gzxy/qiniu-php-sdk
 | Qiniu SDK版本 |                     PHP 版本                      |
 |:--------------------:|:-----------------------------------------------:|
 |        7.15.x        |      cURL extension,   7.1 - 7.4, 8.0 - 8.5     |
-|     7.0 - 7.14.x     | cURL extension,   5.3 - 5.6, 7.0 - 7.4, 8.0-8.1 |
-|          6.x         |           cURL extension,   5.2 - 5.6           |
 
 ## 使用方法
 
