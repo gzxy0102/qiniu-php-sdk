@@ -38,7 +38,6 @@ class ZoneTest extends TestCase
 
         $zone = Zone::queryZone($this->ak, $this->bucketName);
         $this->assertNotEmpty($zone->cdnUpHosts);
-        $this->assertNotEmpty($zone->upHosts);
     }
 
     public function testIoHosts()

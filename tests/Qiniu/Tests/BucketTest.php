@@ -672,10 +672,10 @@ class BucketTest extends TestCase
     {
         $fileToChange = self::getObjectKey(self::$key);
 
-        list(, $err) = self::$bucketManager->changeType(self::$bucketName, $fileToChange, 0);
+        list(, $err) = self::$bucketManager->changeType(self::$bucketName, $fileToChange, 1);
         $this->assertNull($err);
 
-        list(, $err) = self::$bucketManager->changeType(self::$bucketName, $fileToChange, 1);
+        list(, $err) = self::$bucketManager->changeType(self::$bucketName, $fileToChange, 0);
         $this->assertNull($err);
     }
 
