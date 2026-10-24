@@ -48,6 +48,16 @@ class ResumeUpTest extends TestCase
         return $result;
     }
 
+    private static function downloadObject($domain, $key)
+    {
+        $response = Client::get("http://$domain/$key");
+        if ($response->statusCode === -1) {
+            usleep(200000);
+            $response = Client::get("http://$domain/$key");
+        }
+        return $response;
+    }
+
     public function test4ML()
     {
         $key = self::getObjectKey('resumePutFile4ML_');
@@ -69,7 +79,7 @@ class ResumeUpTest extends TestCase
         $this->assertNotNull($ret['hash']);
 
         $domain = qiniuTestDomain();
-        $response = Client::get("http://$domain/$key");
+        $response = self::downloadObject($domain, $key);
         $this->assertEquals(200, $response->statusCode, (string) $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         unlink($tempFile);
@@ -97,7 +107,7 @@ class ResumeUpTest extends TestCase
         $this->assertNotNull($ret['hash']);
 
         $domain = qiniuTestDomain();
-        $response = Client::get("http://$domain/$key");
+        $response = self::downloadObject($domain, $key);
         $this->assertEquals(200, $response->statusCode, (string) $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         unlink($tempFile);
@@ -128,7 +138,7 @@ class ResumeUpTest extends TestCase
         $this->assertNotNull($ret['hash']);
 
         $domain = qiniuTestDomain();
-        $response = Client::get("http://$domain/$key");
+        $response = self::downloadObject($domain, $key);
         $this->assertEquals(200, $response->statusCode, (string) $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         unlink($tempFile);
@@ -207,10 +217,10 @@ class ResumeUpTest extends TestCase
         $this->assertEquals(basename($tempFile), $ret['fname']);
 
         $domain = qiniuTestDomain();
-        $response = Client::get("http://$domain/$key");
+        $response = self::downloadObject($domain, $key);
         $this->assertEquals(200, $response->statusCode, (string) $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
-        $headers = $response->headers();
+        $headers = $response->normalizedHeaders;
         $this->assertEquals("val_1", $headers["X-Qn-Meta-M1"]);
         $this->assertEquals("val_2", $headers["X-Qn-Meta-M2"]);
         unlink($tempFile);
@@ -249,7 +259,7 @@ class ResumeUpTest extends TestCase
             $this->assertNotNull($ret['hash']);
 
             $domain = qiniuTestDomain();
-            $response = Client::get("http://$domain/$key");
+            $response = self::downloadObject($domain, $key);
             $this->assertEquals(200, $response->statusCode, (string) $response->error);
             $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
             unlink($tempFile);
@@ -282,10 +292,10 @@ class ResumeUpTest extends TestCase
         $this->assertEquals(basename($tempFile), $ret['fname']);
 
         $domain = qiniuTestDomain();
-        $response = Client::get("http://$domain/$key");
+        $response = self::downloadObject($domain, $key);
         $this->assertEquals(200, $response->statusCode, (string) $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
-        $headers = $response->headers();
+        $headers = $response->normalizedHeaders;
         $this->assertEquals("val_1", $headers["X-Qn-Meta-M1"]);
         $this->assertEquals("val_2", $headers["X-Qn-Meta-M2"]);
         unlink($tempFile);
