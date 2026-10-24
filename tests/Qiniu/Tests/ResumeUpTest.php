@@ -68,9 +68,9 @@ class ResumeUpTest extends TestCase
         $this->assertNull($error);
         $this->assertNotNull($ret['hash']);
 
-        $domain = getenv('QINIU_TEST_DOMAIN');
+        $domain = qiniuTestDomain();
         $response = Client::get("http://$domain/$key");
-        $this->assertEquals(200, $response->statusCode);
+        $this->assertEquals(200, $response->statusCode, $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         unlink($tempFile);
     }
@@ -96,9 +96,9 @@ class ResumeUpTest extends TestCase
         $this->assertNull($error);
         $this->assertNotNull($ret['hash']);
 
-        $domain = getenv('QINIU_TEST_DOMAIN');
+        $domain = qiniuTestDomain();
         $response = Client::get("http://$domain/$key");
-        $this->assertEquals(200, $response->statusCode);
+        $this->assertEquals(200, $response->statusCode, $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         unlink($tempFile);
     }
@@ -127,9 +127,9 @@ class ResumeUpTest extends TestCase
         $this->assertNull($error);
         $this->assertNotNull($ret['hash']);
 
-        $domain = getenv('QINIU_TEST_DOMAIN');
+        $domain = qiniuTestDomain();
         $response = Client::get("http://$domain/$key");
-        $this->assertEquals(200, $response->statusCode);
+        $this->assertEquals(200, $response->statusCode, $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         unlink($tempFile);
     }
@@ -206,9 +206,9 @@ class ResumeUpTest extends TestCase
         $this->assertEquals("val_2", $ret['var_2']);
         $this->assertEquals(basename($tempFile), $ret['fname']);
 
-        $domain = getenv('QINIU_TEST_DOMAIN');
+        $domain = qiniuTestDomain();
         $response = Client::get("http://$domain/$key");
-        $this->assertEquals(200, $response->statusCode);
+        $this->assertEquals(200, $response->statusCode, $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         $headers = $response->headers();
         $this->assertEquals("val_1", $headers["X-Qn-Meta-M1"]);
@@ -248,9 +248,9 @@ class ResumeUpTest extends TestCase
             $this->assertNull($error);
             $this->assertNotNull($ret['hash']);
 
-            $domain = getenv('QINIU_TEST_DOMAIN');
+            $domain = qiniuTestDomain();
             $response = Client::get("http://$domain/$key");
-            $this->assertEquals(200, $response->statusCode);
+            $this->assertEquals(200, $response->statusCode, $response->error);
             $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
             unlink($tempFile);
         }
@@ -281,9 +281,9 @@ class ResumeUpTest extends TestCase
         $this->assertEquals("val_2", $ret['var_2']);
         $this->assertEquals(basename($tempFile), $ret['fname']);
 
-        $domain = getenv('QINIU_TEST_DOMAIN');
+        $domain = qiniuTestDomain();
         $response = Client::get("http://$domain/$key");
-        $this->assertEquals(200, $response->statusCode);
+        $this->assertEquals(200, $response->statusCode, $response->error);
         $this->assertEquals(md5_file($tempFile, true), md5($response->body(), true));
         $headers = $response->headers();
         $this->assertEquals("val_1", $headers["X-Qn-Meta-M1"]);

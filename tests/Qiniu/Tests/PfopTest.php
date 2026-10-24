@@ -29,6 +29,11 @@ class PfopTest extends TestCase
 
         self::$bucketName = $bucketName;
         self::$testAuth = $testAuth;
+
+        $imagePath = __DIR__ . '/../../../examples/php-logo.png';
+        qiniuEnsureTestObject(self::$bucketName, 'qiniu.png', $imagePath);
+        qiniuEnsureTestObject(self::$bucketName, 'php-logo.png', $imagePath);
+        qiniuEnsureTestObject(self::$bucketName, 'php-sdk.html', __DIR__ . '/../../bootstrap.php');
     }
 
     private static function getConfig()
@@ -38,15 +43,28 @@ class PfopTest extends TestCase
         return null;
     }
 
+    private function prepareMediaFile()
+    {
+        $mediaUrl = getenv('QINIU_TEST_MEDIA_URL');
+        if (empty($mediaUrl)) {
+            $this->markTestSkipped('QINIU_TEST_MEDIA_URL is not configured');
+        }
+
+        $key = 'qiniu-ci-test.mp4';
+        $bucketManager = new \Qiniu\Storage\BucketManager(self::$testAuth);
+        list(, $error) = $bucketManager->fetch($mediaUrl, self::$bucketName, $key);
+        $this->assertNull($error);
+        return $key;
+    }
+
     public function testPfopExecuteAndStatusWithSingleFop()
     {
         global $testAuth;
-        $bucket = 'testres';
-        $key = 'sintel_trailer.mp4';
+        $key = $this->prepareMediaFile();
         $pfop = new PersistentFop($testAuth, self::getConfig());
 
         $fops = 'avthumb/m3u8/segtime/10/vcodec/libx264/s/320x240';
-        list($id, $error) = $pfop->execute($bucket, $key, $fops);
+        list($id, $error) = $pfop->execute(self::$bucketName, $key, $fops);
         $this->assertNull($error);
         list($status, $error) = $pfop->status($id);
         $this->assertNotNull($status);
@@ -57,15 +75,14 @@ class PfopTest extends TestCase
     public function testPfopExecuteAndStatusWithMultipleFops()
     {
         global $testAuth;
-        $bucket = 'testres';
-        $key = 'sintel_trailer.mp4';
+        $key = $this->prepareMediaFile();
         $fops = array(
             'avthumb/m3u8/segtime/10/vcodec/libx264/s/320x240',
             'vframe/jpg/offset/7/w/480/h/360',
         );
         $pfop = new PersistentFop($testAuth, self::getConfig());
 
-        list($id, $error) = $pfop->execute($bucket, $key, $fops);
+        list($id, $error) = $pfop->execute(self::$bucketName, $key, $fops);
         $this->assertNull($error);
 
         list($status, $error) = $pfop->status($id);
@@ -75,7 +92,7 @@ class PfopTest extends TestCase
 
     private function pfopOptionsTestData()
     {
-        return array(
+        $testCases = array(
             array(
                 'type' => null
             ),
@@ -90,11 +107,15 @@ class PfopTest extends TestCase
             ),
             array(
                 'type' => 2
-            ),
-            array(
-                'workflowTemplateID' => 'test-workflow'
             )
         );
+
+        $workflowTemplateID = getenv('QINIU_TEST_WORKFLOW_TEMPLATE_ID');
+        if (!empty($workflowTemplateID)) {
+            $testCases[] = array('workflowTemplateID' => $workflowTemplateID);
+        }
+
+        return $testCases;
     }
 
     public function testPfopExecuteWithOptions()
@@ -286,8 +307,8 @@ class PfopTest extends TestCase
         $key = 'php-logo.png';
         $pfop = new PersistentFop(self::$testAuth, null);
 
-        $url1 = 'http://phpsdk.qiniudn.com/php-logo.png';
-        $url2 = 'http://phpsdk.qiniudn.com/php-sdk.html';
+        $url1 = 'http://devtools.qiniu.com/qiniu.png';
+        $url2 = 'http://developer.qiniu.com/docs/v6/sdk/php-sdk.html';
         $zipKey = 'test.zip';
 
         $fops = 'mkzip/2/url/' . \Qiniu\base64_urlSafeEncode($url1);

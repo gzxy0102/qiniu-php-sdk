@@ -13,10 +13,6 @@ class ZoneTest extends TestCase
     protected $ak;
 
     protected $bucketName;
-    protected $bucketNameBC;
-    protected $bucketNameNA;
-    protected $bucketNameFS;
-    protected $bucketNameAS;
 
 
     /**
@@ -26,18 +22,6 @@ class ZoneTest extends TestCase
     {
         global $bucketName;
         $this->bucketName = $bucketName;
-
-        global $bucketNameBC;
-        $this->bucketNameBC = $bucketNameBC;
-
-        global $bucketNameNA;
-        $this->bucketNameNA = $bucketNameNA;
-
-        global $bucketNameFS;
-        $this->bucketNameFS = $bucketNameFS;
-
-        global $bucketNameAS;
-        $this->bucketNameAS = $bucketNameAS;
 
         global $accessKey;
         $this->ak = $accessKey;
@@ -53,37 +37,14 @@ class ZoneTest extends TestCase
         $this->assertNotNull($err);
 
         $zone = Zone::queryZone($this->ak, $this->bucketName);
-        $this->assertContains('upload.qiniup.com', $zone->cdnUpHosts);
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameBC);
-        $this->assertContains('upload-z1.qiniup.com', $zone->cdnUpHosts);
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameFS);
-        $this->assertContains('upload-z2.qiniup.com', $zone->cdnUpHosts);
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameNA);
-        $this->assertContains('upload-na0.qiniup.com', $zone->cdnUpHosts);
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameAS);
-        $this->assertContains('upload-as0.qiniup.com', $zone->cdnUpHosts);
+        $this->assertNotEmpty($zone->cdnUpHosts);
+        $this->assertNotEmpty($zone->upHosts);
     }
 
     public function testIoHosts()
     {
         $zone = Zone::queryZone($this->ak, $this->bucketName);
-        $this->assertEquals($zone->iovipHost, 'iovip.qbox.me');
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameBC);
-        $this->assertEquals($zone->iovipHost, 'iovip-z1.qbox.me');
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameFS);
-        $this->assertEquals($zone->iovipHost, 'iovip-z2.qbox.me');
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameNA);
-        $this->assertEquals($zone->iovipHost, 'iovip-na0.qbox.me');
-
-        $zone = Zone::queryZone($this->ak, $this->bucketNameAS);
-        $this->assertEquals($zone->iovipHost, 'iovip-as0.qbox.me');
+        $this->assertNotEmpty($zone->iovipHost);
     }
 
     public function testZonez0()

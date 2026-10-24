@@ -48,6 +48,11 @@ class BucketTest extends TestCase
         $config = new Config();
         self::$bucketManager = new BucketManager($testAuth, $config);
 
+        $imagePath = __DIR__ . '/../../../examples/php-logo.png';
+        qiniuEnsureTestObject(self::$bucketName, self::$key, $imagePath);
+        qiniuEnsureTestObject(self::$bucketName, self::$key2, $imagePath);
+        qiniuEnsureTestObject(self::$bucketName, 'php-sdk.html', __DIR__ . '/../../bootstrap.php');
+
         global $dummyAuth;
         self::$dummyBucketManager = new BucketManager($dummyAuth);
 
@@ -104,7 +109,7 @@ class BucketTest extends TestCase
 
     public function testListBuckets()
     {
-        list($ret, $error) = self::$bucketManager->listbuckets('z0');
+        list($ret, $error) = self::$bucketManager->listbuckets();
         $this->assertNull($error);
         $this->assertNotNull($ret);
     }
@@ -139,7 +144,7 @@ class BucketTest extends TestCase
 
     public function testBucketInfos()
     {
-        list($ret, $error) = self::$bucketManager->bucketInfos('z0');
+        list($ret, $error) = self::$bucketManager->bucketInfos();
         $this->assertNull($error);
         $this->assertNotNull($ret);
     }
@@ -365,6 +370,9 @@ class BucketTest extends TestCase
             self::$bucketName,
             'php-sdk.html'
         );
+        if ($error !== null && strpos($error->message(), 'bucket source not set') !== false) {
+            $this->markTestSkipped('Bucket mirror source is not configured');
+        }
         $this->assertNull($error);
         $this->assertNotNull($ret);
     }

@@ -126,7 +126,7 @@ class CdnManagerTest extends TestCase
 
     public function testGetCdnLogList()
     {
-        $domain = getenv('QINIU_TEST_DOMAIN');
+        $domain = qiniuTestDomain();
         list($ret, $err) = $this->cdnManager->getCdnLogList(array($domain), $this->testLogDate);
         $this->assertNull($err);
         $this->assertNotNull($ret);
@@ -134,6 +134,10 @@ class CdnManagerTest extends TestCase
 
     public function testCreateTimestampAntiLeechUrl()
     {
+        if (empty($this->encryptKey)) {
+            $this->markTestSkipped('QINIU_TIMESTAMP_ENCRPTKEY is not configured');
+        }
+
         $signUrl = $this->cdnManager->createTimestampAntiLeechUrl($this->refreshUrl, $this->encryptKey, 3600);
         $response = Client::get($signUrl);
         $this->assertNull($response->error);

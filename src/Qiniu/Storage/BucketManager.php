@@ -611,7 +611,7 @@ final class BucketManager
     public function putBucketQuota($bucket, $size, $count)
     {
         $path = '/setbucketquota/' . $bucket . '/size/' . $size . '/count/' . $count;
-        return $this->apiPost($bucket, $path);
+        return $this->globalApiPost($path);
     }
 
     /**
@@ -623,7 +623,7 @@ final class BucketManager
     public function getBucketQuota($bucket)
     {
         $path = '/getbucketquota/' . $bucket;
-        return $this->apiPost($bucket, $path);
+        return $this->globalApiPost($path);
     }
 
     /**
@@ -1151,6 +1151,12 @@ final class BucketManager
         }
 
         return $this->postV2($host . $path, $body);
+    }
+
+    private function globalApiPost($path, $body = null)
+    {
+        $scheme = $this->config->useHTTPS ? 'https://' : 'http://';
+        return $this->postV2($scheme . Config::API_HOST . $path, $body);
     }
 
     private function ucGet($path)

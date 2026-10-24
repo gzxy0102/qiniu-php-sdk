@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../autoload.php';
 
 use Qiniu\Auth;
+use Qiniu\Storage\BucketManager;
+use Qiniu\Storage\UploadManager;
 
 $accessKey = getenv('QINIU_ACCESS_KEY');
 $secretKey = getenv('QINIU_SECRET_KEY');
@@ -12,15 +14,10 @@ $bucketName = getenv('QINIU_TEST_BUCKET');
 $key = 'php-logo.png';
 $key2 = 'niu.jpg';
 
-$testStartDate = '2020-08-18';
-$testEndDate = '2020-08-19';
+$testStartDate = date('Y-m-d', strtotime('-2 days'));
+$testEndDate = date('Y-m-d', strtotime('-1 day'));
 $testGranularity = 'day';
 $testLogDate = date('Y-m-d',strtotime("-1 days"));
-
-$bucketNameBC = 'phpsdk-bc';
-$bucketNameNA = 'phpsdk-na';
-$bucketNameFS = 'phpsdk-fs';
-$bucketNameAS = 'phpsdk-as';
 
 $dummyAccessKey = 'abcdefghklmnopq';
 $dummySecretKey = '1234567890';
@@ -28,9 +25,36 @@ $dummyAuth = new Auth($dummyAccessKey, $dummySecretKey);
 
 //cdn
 $timestampAntiLeechEncryptKey = getenv('QINIU_TIMESTAMP_ENCRPTKEY');
-$customDomain = "http://sdk.peterpy.cn";
-$customDomain2 = "sdk.peterpy.cn";
+$customDomain = 'http://' . qiniuTestDomain();
+$customDomain2 = qiniuTestDomain();
 $customCallbackURL = "https://qiniu.timhbw.com/notify/callback";
+
+function qiniuTestDomain()
+{
+    $domain = preg_replace('#^https?://#', '', getenv('QINIU_TEST_DOMAIN'));
+    return rtrim($domain, '/');
+}
+
+function qiniuEnsureTestObject($bucket, $key, $filePath)
+{
+    global $testAuth;
+
+    $bucketManager = new BucketManager($testAuth);
+    list(, $error) = $bucketManager->stat($bucket, $key);
+    if ($error === null) {
+        return;
+    }
+    if ($error->code() !== 612) {
+        throw new RuntimeException($error->message());
+    }
+
+    $uploadManager = new UploadManager();
+    $token = $testAuth->uploadToken($bucket, $key);
+    list(, $error) = $uploadManager->putFile($token, $key, $filePath);
+    if ($error !== null) {
+        throw new RuntimeException($error->message());
+    }
+}
 
 $tid = getenv('TRAVIS_JOB_NUMBER');
 if (!empty($tid)) {

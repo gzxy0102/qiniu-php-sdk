@@ -56,6 +56,9 @@ jobs:
           QINIU_SECRET_KEY: ${{ secrets.QINIU_SECRET_KEY }}
           QINIU_TEST_BUCKET: ${{ secrets.QINIU_TEST_BUCKET }}
           QINIU_TEST_DOMAIN: ${{ secrets.QINIU_TEST_DOMAIN }}
+          QINIU_TIMESTAMP_ENCRPTKEY: ${{ secrets.QINIU_TIMESTAMP_ENCRPTKEY }}
+          QINIU_TEST_MEDIA_URL: ${{ secrets.QINIU_TEST_MEDIA_URL }}
+          QINIU_TEST_WORKFLOW_TEMPLATE_ID: ${{ secrets.QINIU_TEST_WORKFLOW_TEMPLATE_ID }}
 
       - name: Print mock server log
         if: ${{ failure() }}
