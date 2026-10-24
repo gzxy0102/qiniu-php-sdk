@@ -1,5 +1,5 @@
 {
-    "name": "qiniu/php-sdk",
+    "name": "gzxy/qiniu-php-sdk",
     "type": "library",
     "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
     "keywords": [
@@ -8,17 +8,20 @@
         "sdk",
         "cloud"
     ],
-    "homepage": "http://developer.qiniu.com/",
+    "homepage": "https://github.com/gzxy0102/qiniu-php-sdk",
     "license": "MIT",
     "authors": [
         {
-            "name": "Qiniu",
-            "email": "sdk@qiniu.com",
-            "homepage": "http://www.qiniu.com"
+            "name": "gzxy",
+            "email": "gaizhixin@vip.qq.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/gzxy0102/qiniu-php-sdk/issues",
+        "source": "https://github.com/gzxy0102/qiniu-php-sdk"
+    },
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=7.1",
         "ext-xml": "*",
         "ext-curl": "*",
         "myclabs/php-enum": "~1.5.2 || ~1.6.6 || ~1.7.7 || ~1.8.4"

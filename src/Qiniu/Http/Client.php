@@ -175,14 +175,18 @@ final class Client
         $ret = curl_errno($ch);
         if ($ret !== 0) {
             $r = new Response(-1, $duration, array(), null, curl_error($ch));
-            curl_close($ch);
+            if (PHP_MAJOR_VERSION < 8) {
+                curl_close($ch);
+            }
             return $r;
         }
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $headers = Header::parseRawText(substr($result, 0, $header_size));
         $body = substr($result, $header_size);
-        curl_close($ch);
+        if (PHP_MAJOR_VERSION < 8) {
+            curl_close($ch);
+        }
         return new Response($code, $duration, $headers, $body, null);
     }
 

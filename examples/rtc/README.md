@@ -19,16 +19,16 @@
 
 ## Demo
 - RoomToken 签发
-    - [生成 RoomToken](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_create_roomToken.php)
+    - [生成 RoomToken](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_create_roomToken.php)
 
 - App 管理
-    - [创建应用](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_createApp.php)
-    - [获取应用配置信息](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_getApp.php)
-    - [更新应用配置信息](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_updateApp.php)
-    - [删除应用](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_deleteApp.php)
+    - [创建应用](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_createApp.php)
+    - [获取应用配置信息](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_getApp.php)
+    - [更新应用配置信息](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_updateApp.php)
+    - [删除应用](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_deleteApp.php)
 
 - 房间管理
-    - [列举房间下的所有用户](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_rooms_listUser.php)
-    - [指定一个用户踢出房间](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_rooms_kickUser.php)
-    - [停止一个房间的合流转推](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_rooms_stopMerge.php)
-    - [获取当前所有活跃的房间](https://github.com/qiniu/php-sdk/tree/master/examples/rtc/rtc_rooms_listActiveRooms.php)   
+    - [列举房间下的所有用户](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_rooms_listUser.php)
+    - [指定一个用户踢出房间](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_rooms_kickUser.php)
+    - [停止一个房间的合流转推](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_rooms_stopMerge.php)
+    - [获取当前所有活跃的房间](https://github.com/gzxy0102/qiniu-php-sdk/tree/master/examples/rtc/rtc_rooms_listActiveRooms.php)
