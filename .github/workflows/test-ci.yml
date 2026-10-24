@@ -47,7 +47,7 @@ jobs:
           ./vendor/bin/phpcs --standard=PSR2 src
           ./vendor/bin/phpcs --standard=PSR2 examples
           ./vendor/bin/phpcs --standard=PSR2 tests
-          ./vendor/bin/phpunit --coverage-clover=coverage.xml
+          ./vendor/bin/phpunit
           cat mock-server.pid | xargs kill
           cat socks-server.pid | xargs kill
 
@@ -66,6 +66,3 @@ jobs:
         if: ${{ failure() }}
         run: |
           cat socks5.log
-
-      - name: After_success
-        run: bash <(curl -s https://codecov.io/bash)
