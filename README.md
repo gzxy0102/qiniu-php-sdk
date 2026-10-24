@@ -4,7 +4,6 @@
 [![GitHub release](https://img.shields.io/github/v/tag/gzxy0102/qiniu-php-sdk.svg?label=release)](https://github.com/gzxy0102/qiniu-php-sdk/releases)
 [![Latest Stable Version](https://img.shields.io/packagist/v/gzxy/qiniu-php-sdk.svg)](https://packagist.org/packages/gzxy/qiniu-php-sdk)
 [![Total Downloads](https://img.shields.io/packagist/dt/gzxy/qiniu-php-sdk.svg)](https://packagist.org/packages/gzxy/qiniu-php-sdk)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gzxy0102/qiniu-php-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gzxy0102/qiniu-php-sdk/?branch=master)
 
 
 ## 安装
