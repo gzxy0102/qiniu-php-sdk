@@ -20,6 +20,9 @@
         "issues": "https://github.com/gzxy0102/qiniu-php-sdk/issues",
         "source": "https://github.com/gzxy0102/qiniu-php-sdk"
     },
+    "replace": {
+        "qiniu/php-sdk": "*"
+    },
     "require": {
         "php": ">=7.1",
         "ext-xml": "*",
